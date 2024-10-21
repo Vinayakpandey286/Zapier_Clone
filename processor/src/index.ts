@@ -26,6 +26,7 @@ async function main() {
       })),
     });
 
+    // it can cause duplication will solve it later in case of db server down
     await client.zapRunOutbox.deleteMany({
       where: {
         id: {
