@@ -41,6 +41,6 @@ app.post('/hooks/catch/:userId/:zapId', async (req, res) => {
 
 // checking PAT 
 
-app.listen(3000, ()=>{
+app.listen(3001, ()=>{
     console.log('app is listening')
 })
