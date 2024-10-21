@@ -10,16 +10,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
+const kafkajs_1 = require("kafkajs");
+const kafka = new kafkajs_1.Kafka({
+    clientId: "outbox-processor",
+    brokers: ["localhost:9092"],
+});
 const client = new client_1.PrismaClient();
+const TOPIC_NAME = "zap-events";
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
+        const producer = kafka.producer();
+        yield producer.connect();
         while (true) {
             const pendingRows = yield client.zapRunOutbox.findMany({
                 where: {},
-                take: 10
+                take: 10,
             });
-            console.log(pendingRows);
-            break;
+            producer.send({
+                topic: TOPIC_NAME,
+                messages: pendingRows.map((r) => ({
+                    value: r.zapRunId,
+                })),
+            });
+            yield client.zapRunOutbox.deleteMany({
+                where: {
+                    id: {
+                        in: pendingRows.map((r) => r.id),
+                    },
+                },
+            });
         }
     });
 }
