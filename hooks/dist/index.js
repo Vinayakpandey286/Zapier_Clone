@@ -36,6 +36,9 @@ app.post('/hooks/catch/:userId/:zapId', (req, res) => __awaiter(void 0, void 0, 
             }
         });
     }));
+    res.json({
+        message: 'Webhook received'
+    });
 }));
 // checking PAT 
 app.listen(3000, () => {
