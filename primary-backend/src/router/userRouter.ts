@@ -40,10 +40,11 @@ router.post("/signin", async (req, res) => {
     res.status(403).json({
       message: "Invalid Credentials",
     });
+    return;
   }
 });
 
-router.post("/signup", async (req: Request, res: Response) => {
+router.post("/signup", async (req, res) => {
   const body = req.body;
   const parsedData = signUpSchema.safeParse(body);
 
@@ -78,6 +79,7 @@ router.post("/signup", async (req: Request, res: Response) => {
   res.json({
     message: "Please verify your account",
   });
+  return;
 });
 
 router.get("/user", authMiddleware, async (req, res) => {
@@ -93,6 +95,7 @@ router.get("/user", authMiddleware, async (req, res) => {
   });
 
   res.json({ user });
+  return;
 });
 
 export default router;
