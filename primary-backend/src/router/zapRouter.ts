@@ -19,7 +19,7 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 
   try {
-    await client.zap.create({
+    const zap = await client.zap.create({
       data: {
         userId: id, // Connect Zap to a User
         trigger: {
@@ -35,13 +35,78 @@ router.post("/", authMiddleware, async (req, res) => {
         },
       },
     });
+
+    res.status(200).json({
+      url: `http://localhost:3001/hooks/catch/:${id}/:${zap.id}`,
+    });
+
+    return;
   } catch (error) {
     throw new Error("Incorrect Action/Triggers");
   }
 });
 
-router.get("/:zapId", authMiddleware, () => {
-  console.log("zpid");
+router.get("/", authMiddleware, async (req, res) => {
+  //@ts-ignore
+  const id = req.id;
+
+  const zaps = await client.zap.findMany({
+    where: {
+      userId: id,
+    },
+    include: {
+      trigger: {
+        include: {
+          type: true,
+        },
+        select: {
+          zapId: false,
+        },
+      },
+      action: {
+        include: {
+          type: true,
+        },
+        select: {
+          zapId: false,
+        },
+      },
+    },
+  });
+
+  res.status(200).json({
+    zaps,
+  });
+  return;
+});
+router.get("/:zapId", authMiddleware, async (req, res) => {
+  //@ts-ignore
+  const id = req.id;
+  const zapId = req.params.zapId || "";
+
+  const zaps = await client.zap.findMany({
+    where: {
+      userId: id,
+      id: zapId,
+    },
+    include: {
+      trigger: {
+        include: {
+          type: true,
+        },
+      },
+      action: {
+        include: {
+          type: true,
+        },
+      },
+    },
+  });
+
+  res.status(200).json({
+    zaps,
+  });
+  return;
 });
 
 export default router;
