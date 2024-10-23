@@ -18,14 +18,16 @@ model User {
   name     String
   email    String @unique
   password String
+  zaps     Zap[]
 }
 
 model Zap {
   id        String   @id @default(uuid())
-  triggerId String
   trigger   Trigger?
   action    Action[]
   zapRuns   zapRun[]
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
 }
 
 model Trigger {
@@ -54,7 +56,7 @@ model AvailableTrigger {
 model AvailableActions {
   id      String   @id @default(uuid())
   name    String
-  actions Action[]
+  actions Action[] // 1 available action id ka bahut saare action ke saath relation ho skta h
 }
 
 model zapRun {

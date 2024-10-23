@@ -77,12 +77,12 @@ router.post("/signup", async (req, res) => {
   });
 
   res.json({
-    message: "Please verify your account",
+    message: "Please verify your account by Checking your email.",
   });
   return;
 });
 
-router.get("/user", authMiddleware, async (req, res) => {
+router.get("/", authMiddleware, async (req, res) :Promise<void>=> {
   //@ts-ignore
   const id = req.id;
 

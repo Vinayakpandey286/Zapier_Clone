@@ -18,14 +18,16 @@ model User {
   name     String
   email    String @unique
   password String
+  zaps     Zap[]
 }
 
 model Zap {
   id        String   @id @default(uuid())
-  triggerId String
   trigger   Trigger?
   action    Action[]
   zapRuns   zapRun[]
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
 }
 
 model Trigger {
@@ -37,12 +39,12 @@ model Trigger {
 }
 
 model Action {
-  id       String           @id @default(uuid())
-  zapId    String          
-  actionId String
-  type     AvailableActions @relation(fields: [actionId], references: [id])
-  zap      Zap              @relation(fields: [zapId], references: [id])
-  sortingOrder Int @default(0)
+  id           String           @id @default(uuid())
+  zapId        String
+  actionId     String
+  type         AvailableActions @relation(fields: [actionId], references: [id])
+  zap          Zap              @relation(fields: [zapId], references: [id])
+  sortingOrder Int              @default(0)
 }
 
 model AvailableTrigger {
@@ -52,9 +54,9 @@ model AvailableTrigger {
 }
 
 model AvailableActions {
-  id       String   @id @default(uuid())
-  name     String
-  actions Action[]
+  id      String   @id @default(uuid())
+  name    String
+  actions Action[] // 1 available action id ka bahut saare action ke saath relation ho skta h
 }
 
 model zapRun {
