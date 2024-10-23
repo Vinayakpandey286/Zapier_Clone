@@ -2,8 +2,6 @@ import { Router } from "express";
 import { authMiddleware } from "../middleware";
 import { zapCreateSchema } from "../types";
 import { client } from "../db";
-import { string } from "zod";
-
 
 const router = Router();
 
@@ -27,16 +25,18 @@ router.post("/", authMiddleware, async (req, res) => {
         trigger: {
           create: {
             triggerId: parsedData.data.availableTriggerId, // The ID of AvailableTrigger
-            type: {
-              connect: { id: parsedData.data.availableTriggerId}, // Connect to the AvailableTrigger using its ID
-            },
           },
         },
-        action: {},
+        action: {
+          create: parsedData.data.action.map((x, index) => ({
+            actionId: x.availableActionId,
+            sortingOrder: index,
+          })),
+        },
       },
     });
   } catch (error) {
-    throw new Error("Incorrect Action/Triggers")
+    throw new Error("Incorrect Action/Triggers");
   }
 });
 
