@@ -57,19 +57,14 @@ router.get("/", authMiddleware, async (req, res) => {
     include: {
       trigger: {
         include: {
-          type: true,
-        },
-        select: {
-          zapId: false,
-        },
+          type: true, // either use select or include
+        }
       },
       action: {
         include: {
           type: true,
         },
-        select: {
-          zapId: false,
-        },
+        
       },
     },
   });
@@ -79,12 +74,14 @@ router.get("/", authMiddleware, async (req, res) => {
   });
   return;
 });
+
+
 router.get("/:zapId", authMiddleware, async (req, res) => {
   //@ts-ignore
   const id = req.id;
   const zapId = req.params.zapId || "";
 
-  const zaps = await client.zap.findMany({
+  const zap = await client.zap.findMany({
     where: {
       userId: id,
       id: zapId,
@@ -93,7 +90,7 @@ router.get("/:zapId", authMiddleware, async (req, res) => {
       trigger: {
         include: {
           type: true,
-        },
+        }
       },
       action: {
         include: {
@@ -104,7 +101,7 @@ router.get("/:zapId", authMiddleware, async (req, res) => {
   });
 
   res.status(200).json({
-    zaps,
+    zap,
   });
   return;
 });
