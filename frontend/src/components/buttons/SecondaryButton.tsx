@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 
-const PrimaryButton = ({
+const SecondaryButton = ({
   children,
   onClick,
   size = "small",
@@ -14,7 +14,7 @@ const PrimaryButton = ({
       <div
         className={`${
           size === "small" ? "text-sm px-4 py-2" : "text-md px-20 py-2"
-        } bg-orange rounded-full text-[#fff] m-2 font-semibold cursor-pointer hover:shadow-md`}
+        } border-[1px] border-solid border-black rounded-full m-2 font-semibold cursor-pointer hover:shadow-md`}
         onClick={onClick}
       >
         {children}
@@ -23,4 +23,4 @@ const PrimaryButton = ({
   );
 };
 
-export default PrimaryButton;
+export default SecondaryButton;
