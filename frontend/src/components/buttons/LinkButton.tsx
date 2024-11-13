@@ -8,8 +8,13 @@ const LinkButton = ({
   onClick: () => void;
 }) => {
   return (
-    <div className="px-2 py-4 pointer text-sm" onClick={onClick}>
-      {children}
+    <div>
+      <div
+        className="p-2 my-2 font-light cursor-pointer text-sm hover:bg-slate-100 rounded-md"
+        onClick={onClick}
+      >
+        {children}
+      </div>
     </div>
   );
 };

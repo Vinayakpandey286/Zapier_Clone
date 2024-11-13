@@ -7,8 +7,10 @@ const Appbar = () => {
   const router = useRouter();
   return (
     <div className="flex justify-between border-b-2">
-      <div className="text-xl flex flex-col justify-center ml-8">Zapier</div>
-      <div className="flex">
+      <div className="font-extrabold text-2xl flex flex-col justify-center ml-8">
+        Zapier
+      </div>
+      <div className="flex justify-around">
         <LinkButton onClick={() => {}}>Contact Sales</LinkButton>
         <LinkButton
           onClick={() => {
