@@ -13,8 +13,8 @@ const PrimaryButton = ({
     <div>
       <div
         className={`${
-          size === "small" ? "text-sm px-4 py-2" : "text-md px-20 py-2"
-        } bg-orange rounded-full text-[#fff] m-2 font-semibold cursor-pointer hover:shadow-md`}
+          size === "small" ? "text-sm px-4 py-2" : "text-md px-20 py-3"
+        } bg-orange rounded-full text-[#fff] m-2 font-semibold cursor-pointer hover:shadow-md text-center`}
         onClick={onClick}
       >
         {children}

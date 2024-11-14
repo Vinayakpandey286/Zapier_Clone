@@ -12,14 +12,16 @@ const Input = ({
   placeholder?: string;
 }) => {
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       <label className="font-medium text-sm">{label}</label>
-      <input
-        type={type}
-        placeholder={placeholder}
-        onChange={onChange}
-        className="h-8 border-[1px] border-solid border-black ml-4"
-      />
+      <div className="">
+        <input
+          type={type}
+          placeholder={placeholder}
+          onChange={onChange}
+          className="h-8 border-[1px] border-solid border-black w-[100%]"
+        />
+      </div>
     </div>
   );
 };

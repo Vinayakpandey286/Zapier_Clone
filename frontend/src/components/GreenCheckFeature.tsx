@@ -2,7 +2,7 @@ const GreenCheckFeature = ({ title }: { title: string }) => {
   return (
     <div className="flex gap-1">
       <Check />
-      <div className="font-normal" >{title}</div>
+      <div className="font-serif" >{title}</div>
     </div>
   );
 };
